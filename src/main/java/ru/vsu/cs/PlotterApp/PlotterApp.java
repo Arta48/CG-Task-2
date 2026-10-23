@@ -187,8 +187,11 @@ public class PlotterApp extends Application {
                     double py = Math.max(-h * 2, Math.min(h * 3, rawPy));
 
                     if (prevOk) {
-                        // Асимптота: смена знака с резким скачком
-                        if (prevMathY * mathY < 0 && Math.abs(mathY - prevMathY) > 3.0) {
+                        // Асимптота при смене знака: значение в средней точке улетает за пределы диапазона
+                        double midY = func.applyAsDouble((px - 0.25 - originX) / scale);
+                        boolean isAsymptote = (prevMathY * mathY < 0) && (!Double.isFinite(midY) || midY < Math.min(prevMathY, mathY) || midY > Math.max(prevMathY, mathY));
+
+                        if (isAsymptote) {
                             gc.strokeLine(prevX, prevY, prevX, prevMathY > 0 ? -10 : h + 10);
                             gc.strokeLine(px, mathY > 0 ? -10 : h + 10, px, py);
                         } else {
