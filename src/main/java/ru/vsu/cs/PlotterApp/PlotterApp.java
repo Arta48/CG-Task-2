@@ -37,7 +37,7 @@ public class PlotterApp extends Application {
 
         Runnable applyFunc = () -> {
             try {
-                // func = MathParser.parse(tfExpr.getText());
+                func = MathParser.parse(tfExpr.getText());
                 lblErr.setText("");
             } catch (Exception ex) {
                 lblErr.setText("Ошибка: " + ex.getMessage());
